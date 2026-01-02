@@ -1,5 +1,10 @@
 <x-app-layout>
     <div class="max-w-7xl mx-auto mt-4 sm:px-6 lg:px-8 px-2">
+
+        @if (session()->has('success'))
+            <x-alert message="{{ session('success') }}" />
+        @endif
+
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl">List Product</h2>
             <button class="bg-gray-200 px-10 py-2 rounded-sm font-semibold" onclick="window.location.href='{{ route('product.create') }}'">Tambah Product</button>
@@ -7,12 +12,12 @@
         <div class="grid grid-cols-1 mt-4 gap-6 md:grid-cols-3">
             @foreach ( $products as $product )
                 <div>
-                    <img src="{{ url('storage/' . $product->foto) }}" alt="foto">
+                    <img src="{{ url('storage/' . $product->foto) }}" alt="foto" class="h-[400px] w-full object-cover">
                     <div class="my-2">
                         <p class="text-xl font-light">{{ $product->nama }}</p>
                         <p class="font-semibold text-gray-400">Rp. {{ number_format($product->harga) }}</p>
                     </div>
-                    <button class="bg-gray-200 px-10 py-2 rounded-sm w-full font-semibold">Edit</button>
+                    <button onclick="window.location.href='{{ route('product.edit', $product) }}'" class="bg-gray-200 px-10 py-2 rounded-sm w-full font-semibold">Edit</button>
                 </div>
                 
             @endforeach
